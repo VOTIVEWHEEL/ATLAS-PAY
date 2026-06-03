@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: atlaspay
+      POSTGRES_PASSWORD: atlaspay_secret
+      POSTGRES_DB: atlaspay
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  auth-service:
+    build:
+      context: ../apps/auth-service
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres
+      - redis
+
+  wallet-service:
+    build:
+      context: ../apps/wallet-service
+    ports:
+      - "3002:3000"
+    depends_on:
+      - postgres
+      - redis
+
+  ledger-service:
+    build:
+      context: ../apps/ledger-service
+    ports:
+      - "3003:3000"
+    depends_on:
+      - postgres
+
+  notification-service:
+    build:
+      context: ../apps/notification-service
+    ports:
+      - "3004:3000"
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:
