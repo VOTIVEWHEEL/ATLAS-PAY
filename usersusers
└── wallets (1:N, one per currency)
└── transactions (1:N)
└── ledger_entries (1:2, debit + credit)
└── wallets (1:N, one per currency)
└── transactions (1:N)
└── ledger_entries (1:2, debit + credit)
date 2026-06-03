@@ -1,0 +1,6 @@
+## Key Relationships
+- A **User** can hold multiple **Wallets** (NGN, USD, etc.)
+- Each **Transaction** spawns exactly two **LedgerEntries** (double-entry)
+- **Transactions** are immutable; reversals create new entries
+
+See `packages/database/src/migrations/001_initial.sql` for full DDL.
