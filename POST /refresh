@@ -1,0 +1,26 @@
+---
+
+**`docs/api/wallet.md`**
+```markdown
+# Wallet Service API
+
+Base URL: `/api/v1/wallets`
+
+All routes require `Authorization: Bearer <token>`.
+
+## Endpoints
+
+### GET /
+List all wallets for the authenticated user.
+
+### GET /:currency/balance
+Get balance for a specific currency wallet.
+
+### POST /fund
+Fund wallet via Paystack or bank transfer.
+
+### POST /transfer
+Intra-platform transfer between users.
+
+### GET /transactions
+Paginated transaction history.
